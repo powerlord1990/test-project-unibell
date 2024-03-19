@@ -21,33 +21,33 @@ public class ClientController {
     private final ClientService clientService;
 
     @PostMapping
-    public ResponseEntity<Client> addClient(@RequestBody ClientDto clientDTO) {
-        Client savedClient = clientService.addClient(clientDTO);
-        return new ResponseEntity<>(savedClient, HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Client addClient(@RequestBody ClientDto clientDTO) {
+        return clientService.addClient(clientDTO);
     }
 
     @PostMapping("/{clientId}/contacts")
-    public ResponseEntity<Contact> addContact(@PathVariable Long clientId, @RequestBody ContactDto contactDto) {
-        Contact savedContact = clientService.addContact(clientId, contactDto);
-        return new ResponseEntity<>(savedContact, HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Contact addContact(@PathVariable Long clientId, @RequestBody ContactDto contactDto) {
+        return clientService.addContact(clientId, contactDto);
+
     }
 
     @GetMapping
-    public ResponseEntity<List<Client>> getAllClients() {
-        List<Client> clients = clientService.getAllClients();
-        log.info(clients.toString());
-        return new ResponseEntity<>(clients, HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public List<Client> getAllClients() {
+        return clientService.getAllClients();
     }
 
     @GetMapping("/{clientId}")
-    public ResponseEntity<Client> getClientById(@PathVariable Long clientId) {
-        Client client = clientService.getClientById(clientId);
-        return new ResponseEntity<>(client, HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public Client getClientById(@PathVariable Long clientId) {
+        return clientService.getClientById(clientId);
     }
 
     @GetMapping("/{clientId}/contacts")
-    public ResponseEntity<List<Contact>> getClientContacts(@PathVariable Long clientId) {
-        List<Contact> contacts = clientService.getClientContacts(clientId);
-        return new ResponseEntity<>(contacts, HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public List<Contact> getClientContacts(@PathVariable Long clientId) {
+        return clientService.getClientContacts(clientId);
     }
 }
